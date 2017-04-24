@@ -4,7 +4,7 @@
  * @author Pavel Stepanets <pahhan.ne@gmail.com>
  */
 
-namespace SymfonyBro\NotificationCoreBundle\Driver;
+namespace SymfonyBro\NotificationCoreBundle\Driver\SwiftMailer;
 
 use SymfonyBro\NotificationCore\Exception\NotificationException;
 use SymfonyBro\NotificationCore\Model\DriverInterface;

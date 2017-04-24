@@ -34,6 +34,19 @@ class NotificationManager extends AbstractNotificationManager
      */
     private $eventDispatcher;
 
+    /**
+     * NotificationManager constructor.
+     * @param DriverBuilder $driverBuilder
+     * @param FormatterBuilder $formatterBuilder
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(DriverBuilder $driverBuilder, FormatterBuilder $formatterBuilder, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->driverBuilder = $driverBuilder;
+        $this->formatterBuilder = $formatterBuilder;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     protected function createDriver(NotificationInterface $notification): DriverInterface
     {
         return $this->driverBuilder->build($notification);

@@ -3,4 +3,24 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="SymfonyBro\NotificationCoreBundle\Model\DriverBuilder"
+                 id="symfony_bro.notification_core.driver_builder"
+                 public="false">
+            <argument id="service_container" type="service"/>
+        </service>
+
+        <service class="SymfonyBro\NotificationCoreBundle\Model\FormatterBuilder"
+                 id="symfony_bro.notification_core.formatter_builder"
+                 public="false">
+            <argument id="service_container" type="service"/>
+        </service>
+
+        <service class="SymfonyBro\NotificationCoreBundle\Model\NotificationManager"
+                 id="symfony_bro.notification_core.notification_manager">
+            <argument id="symfony_bro.notification_core.driver_builder" type="service"/>
+            <argument id="symfony_bro.notification_core.formatter_builder" type="service"/>
+            <argument id="event_dispatcher" type="service"/>
+        </service>
+    </services>
 </container>
