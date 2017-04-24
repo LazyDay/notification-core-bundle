@@ -21,22 +21,41 @@ class DriverBuilder
 
     private $driverServices = [];
 
+    /**
+     * DriverBuilder constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @param string $notificationClass
+     * @param string $serviceName
+     */
     public function registerDriverService(string $notificationClass, string $serviceName)
     {
         $this->driverServices[$notificationClass] = $serviceName;
     }
 
+    /**
+     * @param NotificationInterface $notification
+     * @return DriverInterface
+     * @throws NotificationException
+     */
     public function build(NotificationInterface $notification): DriverInterface
     {
         $key = get_class($notification);
+
         if (!array_key_exists($key, $this->driverServices)) {
-            throw new NotificationException("Driver for '$key' is not registered");
+            throw new NotificationException($notification, "Driver for '$key' is not registered");
         }
 
         $driverService = $this->driverServices[$key];
 
         if (!$this->container->has($driverService)) {
-            throw new NotificationException("Driver service '$driverService' is not registered");
+            throw new NotificationException($notification, "Driver service '$driverService' is not registered in container");
         }
 
         /** @var DriverInterface $driver */
