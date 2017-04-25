@@ -38,8 +38,10 @@ class FormatterBuilderTest extends TestCase
         $builder = new FormatterBuilder($container);
 
         $builder->registerFormatterService(get_class($notification), $serviceName);
+        foreach ($builder->build($notification) as $buildedFormatter) {
+            $this->assertEquals($formatter, $buildedFormatter);
+        }
 
-        $this->assertEquals($formatter,$builder->build($notification));
     }
 
     public function testBuildException()
@@ -51,7 +53,7 @@ class FormatterBuilderTest extends TestCase
         $builder = new FormatterBuilder($container);
 
         $this->expectException(NotificationException::class);
-        $this->expectExceptionMessage("Formatter for '$class' is not registered");
+        $this->expectExceptionMessage("Formatters for '$class' is not registered");
         $builder->build($notification);
     }
 

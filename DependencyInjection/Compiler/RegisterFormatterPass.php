@@ -1,20 +1,20 @@
 <?php
-
-namespace SymfonyBro\NotificationCoreBundle\DependencyInjection\Compiler;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Exception\LogicException;
-
 /**
  * @author Artem Dekhtyar <m@artemd.ru>
  * @author Pavel Stepanets <pahhan.ne@gmail.com>
  */
-class RegisterDriverPass implements CompilerPassInterface
+
+namespace SymfonyBro\NotificationCoreBundle\DependencyInjection\Compiler;
+
+
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+class RegisterFormatterPass implements CompilerPassInterface
 {
+    private $tag = 'symfony-bro.notification.formatter';
 
-    private $tag = 'symfony-bro.notification.driver';
-
-    private $builderId = 'symfony_bro.notification_core.driver_builder';
+    private $builderId = 'symfony_bro.notification_core.formatter_builder';
 
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -33,11 +33,12 @@ class RegisterDriverPass implements CompilerPassInterface
 
         foreach ($drivers as $id => $tags) {
             foreach ($tags as $attributes) {
-                if (!isset($attributes['supports'])) {
+                if (!isset($attributes['notification'])) {
                     throw new LogicException("'notification' is required attribute for tag $this->tag");
                 }
-                $builder->addMethodCall('registerDriverService', [$attributes['supports'], $id]);
+                $builder->addMethodCall('registerFormatterService', [$attributes['notification'], $id]);
             }
         }
+
     }
 }

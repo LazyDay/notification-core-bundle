@@ -7,9 +7,10 @@
 namespace SymfonyBro\NotificationCoreBundle\EventDispatcher;
 
 
+use Symfony\Component\EventDispatcher\Event;
 use SymfonyBro\NotificationCore\Model\MessageInterface;
 
-class BeforeSendEvent
+class BeforeSendEvent extends Event
 {
     /**
      * @var MessageInterface

@@ -56,18 +56,20 @@ class FormatterBuilder
         $key = get_class($notification);
 
         if (!array_key_exists($key, $this->formatterServices)) {
-            throw new NotificationException($notification, "Formatter for '$key' is not registered");
+            throw new NotificationException($notification, "Formatters for '$key' is not registered");
         }
 
-        $formatterService = $this->formatterServices[$key];
+        $formatterServices = $this->formatterServices[$key];
 
-        if (!$this->container->has($formatterService)) {
-            throw new NotificationException($notification, "Formatter service '$formatterService' is not registered in container");
+        $formatters = [];
+        foreach ($formatterServices as $formatterService) {
+            if (!$this->container->has($formatterService)) {
+                throw new NotificationException($notification, "Formatter service '$formatterService' is not registered in container");
+            }
+
+            $formatters[] = $this->container->get($formatterService);
         }
 
-        /** @var FormatterInterface $formatter */
-        $formatter = $this->container->get($formatterService);
-
-        return $formatter;
+        return $formatters;
     }
 }
