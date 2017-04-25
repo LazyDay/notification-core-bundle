@@ -21,6 +21,8 @@
             <argument id="symfony_bro.notification_core.driver_builder" type="service"/>
             <argument id="symfony_bro.notification_core.formatter_builder" type="service"/>
             <argument id="event_dispatcher" type="service"/>
+            <argument id="logger" type="service"/>
+            <tag name="monolog.logger" channel="notifications" />
         </service>
     </services>
 </container>

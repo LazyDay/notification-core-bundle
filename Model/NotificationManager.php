@@ -7,6 +7,8 @@
 namespace SymfonyBro\NotificationCoreBundle\Model;
 
 
+use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use SymfonyBro\NotificationCore\Model\AbstractNotificationManager;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
@@ -34,16 +36,22 @@ class NotificationManager extends AbstractNotificationManager
     private $eventDispatcher;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * NotificationManager constructor.
      * @param DriverBuilder $driverBuilder
      * @param FormatterBuilder $formatterBuilder
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(DriverBuilder $driverBuilder, FormatterBuilder $formatterBuilder, EventDispatcherInterface $eventDispatcher)
+    public function __construct(DriverBuilder $driverBuilder, FormatterBuilder $formatterBuilder, EventDispatcherInterface $eventDispatcher, LoggerInterface $logger)
     {
         $this->driverBuilder = $driverBuilder;
         $this->formatterBuilder = $formatterBuilder;
         $this->eventDispatcher = $eventDispatcher;
+        $this->logger = $logger;
     }
 
     protected function createDriver(MessageInterface $message): DriverInterface
@@ -64,5 +72,20 @@ class NotificationManager extends AbstractNotificationManager
     protected function beforeSend(MessageInterface $message)
     {
         $this->eventDispatcher->dispatch(NotificationEvents::BEFORE_SEND, new BeforeSendEvent($message));
+    }
+
+    protected function onFormatException(NotificationInterface $notification, Exception $exception)
+    {
+        $this->logger->error($exception->getMessage());
+    }
+
+    protected function onDriverCreateException(NotificationInterface $notification, MessageInterface $message, Exception $exception)
+    {
+        $this->logger->error($exception->getMessage());
+    }
+
+    protected function onSendException(NotificationInterface $notification, MessageInterface $message, Exception $exception)
+    {
+        $this->logger->error($exception->getMessage());
     }
 }
