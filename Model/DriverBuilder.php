@@ -7,10 +7,11 @@
 namespace SymfonyBro\NotificationCoreBundle\Model;
 
 
+use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use SymfonyBro\NotificationCore\Exception\NotificationException;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
-use SymfonyBro\NotificationCore\Model\NotificationInterface;
+use SymfonyBro\NotificationCore\Model\MessageInterface;
 
 class DriverBuilder
 {
@@ -31,31 +32,31 @@ class DriverBuilder
     }
 
     /**
-     * @param string $notificationClass
+     * @param string $messageClass
      * @param string $serviceName
      */
-    public function registerDriverService(string $notificationClass, string $serviceName)
+    public function registerDriverService(string $messageClass, string $serviceName)
     {
-        $this->driverServices[$notificationClass] = $serviceName;
+        $this->driverServices[$messageClass] = $serviceName;
     }
 
     /**
-     * @param NotificationInterface $notification
+     * @param MessageInterface $message
      * @return DriverInterface
      * @throws NotificationException
      */
-    public function build(NotificationInterface $notification): DriverInterface
+    public function build(MessageInterface $message): DriverInterface
     {
-        $key = get_class($notification);
+        $key = get_class($message);
 
         if (!array_key_exists($key, $this->driverServices)) {
-            throw new NotificationException($notification, "Driver for '$key' is not registered");
+            throw new InvalidArgumentException("Driver for '$key' is not registered");
         }
 
         $driverService = $this->driverServices[$key];
 
         if (!$this->container->has($driverService)) {
-            throw new NotificationException($notification, "Driver service '$driverService' is not registered in container");
+            throw new InvalidArgumentException("Driver service '$driverService' is not registered in container");
         }
 
         /** @var DriverInterface $driver */

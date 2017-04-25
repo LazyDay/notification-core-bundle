@@ -10,7 +10,6 @@ namespace SymfonyBro\NotificationCoreBundle\Model;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use SymfonyBro\NotificationCore\Model\AbstractNotificationManager;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
-use SymfonyBro\NotificationCore\Model\FormatterInterface;
 use SymfonyBro\NotificationCore\Model\MessageInterface;
 use SymfonyBro\NotificationCore\Model\NotificationInterface;
 use SymfonyBro\NotificationCoreBundle\EventDispatcher\BeforeFormatEvent;
@@ -47,12 +46,12 @@ class NotificationManager extends AbstractNotificationManager
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    protected function createDriver(NotificationInterface $notification): DriverInterface
+    protected function createDriver(MessageInterface $message): DriverInterface
     {
-        return $this->driverBuilder->build($notification);
+        return $this->driverBuilder->build($message);
     }
 
-    protected function createFormatter(NotificationInterface $notification): FormatterInterface
+    protected function createFormatters(NotificationInterface $notification): array
     {
         return $this->formatterBuilder->build($notification);
     }

@@ -36,15 +36,22 @@ class FormatterBuilder
      */
     public function registerFormatterService(string $notificationClass, string $serviceName)
     {
-        $this->formatterServices[$notificationClass] = $serviceName;
+        if (isset($this->formatterServices[$notificationClass])) {
+            $services = &$this->formatterServices[$notificationClass];
+            if (!in_array($serviceName, $services)) {
+                $services[] = $serviceName;
+            }
+        } else {
+            $this->formatterServices[$notificationClass] = [$serviceName];
+        }
     }
 
     /**
      * @param NotificationInterface $notification
-     * @return FormatterInterface
+     * @return FormatterInterface[]
      * @throws NotificationException
      */
-    public function build(NotificationInterface $notification): FormatterInterface
+    public function build(NotificationInterface $notification): array
     {
         $key = get_class($notification);
 

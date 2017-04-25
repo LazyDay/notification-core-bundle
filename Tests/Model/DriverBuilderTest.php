@@ -6,11 +6,11 @@
 
 namespace SymfonyBro\NotificationCoreBundle\Tests\Model;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use SymfonyBro\NotificationCore\Exception\NotificationException;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
-use SymfonyBro\NotificationCore\Model\NotificationInterface;
+use SymfonyBro\NotificationCore\Model\MessageInterface;
 use SymfonyBro\NotificationCoreBundle\Model\DriverBuilder;
 
 class DriverBuilderTest extends TestCase
@@ -18,7 +18,7 @@ class DriverBuilderTest extends TestCase
     public function testBuild()
     {
         $serviceName = 'test_driver_service';
-        $notification = $this->getMockForAbstractClass(NotificationInterface::class);
+        $message = $this->getMockForAbstractClass(MessageInterface::class);
         $driver = $this->getMockForAbstractClass(DriverInterface::class);
 
         $container = $this->getMockForAbstractClass(ContainerInterface::class);
@@ -37,29 +37,29 @@ class DriverBuilderTest extends TestCase
 
         $builder = new DriverBuilder($container);
 
-        $builder->registerDriverService(get_class($notification), $serviceName);
+        $builder->registerDriverService(get_class($message), $serviceName);
 
-        $this->assertEquals($driver,$builder->build($notification));
+        $this->assertEquals($driver,$builder->build($message));
     }
 
     public function testBuildException()
     {
-        $notification = $this->getMockForAbstractClass(NotificationInterface::class);
-        $class = get_class($notification);
+        $message = $this->getMockForAbstractClass(MessageInterface::class);
+        $class = get_class($message);
         $container = $this->getMockForAbstractClass(ContainerInterface::class);
 
         $builder = new DriverBuilder($container);
 
-        $this->expectException(NotificationException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Driver for '$class' is not registered");
-        $builder->build($notification);
+        $builder->build($message);
     }
 
     public function testBuildException2()
     {
         $serviceName = 'test_driver_service';
-        $notification = $this->getMockForAbstractClass(NotificationInterface::class);
-        $class = get_class($notification);
+        $message = $this->getMockForAbstractClass(MessageInterface::class);
+        $class = get_class($message);
         $container = $this->getMockForAbstractClass(ContainerInterface::class);
 
         $container
@@ -71,9 +71,9 @@ class DriverBuilderTest extends TestCase
         $builder = new DriverBuilder($container);
         $builder->registerDriverService($class, $serviceName);
 
-        $this->expectException(NotificationException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Driver service '$serviceName' is not registered in container");
-        $builder->build($notification);
+        $builder->build($message);
     }
 
 }
