@@ -76,16 +76,24 @@ class NotificationManager extends AbstractNotificationManager
 
     protected function onFormatException(NotificationInterface $notification, Exception $exception)
     {
-        $this->logger->error($exception->getMessage());
+        $this->logger->error("Error on formatting notification: " . $exception->getMessage(), [
+            'notification_class' => get_class($notification),
+        ]);
     }
 
     protected function onDriverCreateException(NotificationInterface $notification, MessageInterface $message, Exception $exception)
     {
-        $this->logger->error($exception->getMessage());
+        $this->logger->error("Error on create driver for message: " . $exception->getMessage(), [
+            'notification_class' => get_class($notification),
+            'message_class' => get_class($message),
+        ]);
     }
 
     protected function onSendException(NotificationInterface $notification, MessageInterface $message, Exception $exception)
     {
-        $this->logger->error($exception->getMessage());
+        $this->logger->error("Error on send message: " . $exception->getMessage(), [
+            'notification_class' => get_class($notification),
+            'message_class' => get_class($message),
+        ]);
     }
 }
