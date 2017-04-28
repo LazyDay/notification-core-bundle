@@ -4,10 +4,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service class="SymfonyBro\NotificationCoreBundle\Driver\SwiftMailer\SwiftMailerDriver"
+        <service class="SymfonyBro\NotificationCore\Driver\SwiftMailer\SwiftMailerDriver"
                  id="symfony_bro.notification_core.driver.swift_mailer">
             <argument id="swiftmailer.mailer" type="service"/>
-            <tag name="symfony-bro.notification.driver" supports="SymfonyBro\NotificationCoreBundle\Driver\SwiftMailer\SwiftMailerMessage"/>
+            <tag name="symfony-bro.notification.driver" supports="SymfonyBro\NotificationCore\Driver\SwiftMailer\SwiftMailerMessage"/>
         </service>
     </services>
 </container>
