@@ -15,6 +15,7 @@
     ],
     "require" : {
         "php": ">=7.0",
+        "symfony/dependency-injection": "^3.2",
         "symfony-bro/notification-core": "dev-master"
     },
     "require-dev": {
