@@ -15,7 +15,7 @@
     ],
     "require" : {
         "php": ">=7.0",
-        "symfony-bro/notification-core": "~1.0"
+        "symfony-bro/notification-core": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1"
