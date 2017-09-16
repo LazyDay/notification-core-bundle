@@ -10,4 +10,5 @@ final class NotificationEvents
 {
     const BEFORE_FORMAT = 'symfony_bro.notification_core.before_format';
     const BEFORE_SEND = 'symfony_bro.notification_core.before_send';
+    const AFTER_SEND = 'symfony_bro.notification_core.after_send';
 }
