@@ -14,6 +14,7 @@ use SymfonyBro\NotificationCore\Model\AbstractNotificationManager;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
 use SymfonyBro\NotificationCore\Model\MessageInterface;
 use SymfonyBro\NotificationCore\Model\NotificationInterface;
+use SymfonyBro\NotificationCoreBundle\EventDispatcher\AfterSendEvent;
 use SymfonyBro\NotificationCoreBundle\EventDispatcher\BeforeFormatEvent;
 use SymfonyBro\NotificationCoreBundle\EventDispatcher\BeforeSendEvent;
 use SymfonyBro\NotificationCoreBundle\EventDispatcher\NotificationEvents;
@@ -72,6 +73,11 @@ class NotificationManager extends AbstractNotificationManager
     protected function beforeSend(MessageInterface $message)
     {
         $this->eventDispatcher->dispatch(NotificationEvents::BEFORE_SEND, new BeforeSendEvent($message));
+    }
+
+    protected function afterSend(MessageInterface $message)
+    {
+        $this->eventDispatcher->dispatch(NotificationEvents::AFTER_SEND, new AfterSendEvent($message));
     }
 
     protected function onFormatException(NotificationInterface $notification, Exception $exception)
