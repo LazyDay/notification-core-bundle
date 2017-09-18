@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: artem
- * Date: 9/16/17
- * Time: 5:24 PM
- */
-
 namespace SymfonyBro\NotificationCoreBundle\EventDispatcher;
 
-
+use Symfony\Component\EventDispatcher\Event;
 use SymfonyBro\NotificationCore\Model\MessageInterface;
 
-class AfterSendEvent
+class AfterSendEvent extends Event
 {
     /**
      * @var MessageInterface
