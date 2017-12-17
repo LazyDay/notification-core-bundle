@@ -15,7 +15,8 @@
     ],
     "require" : {
         "php": ">=7.0",
-        "symfony-bro/notification-core": "^0.1",
+        "psr/log": "^1.0.1",
+        "symfony-bro/notification-core": "^0.2",
         "symfony/dependency-injection": "^3.2",
         "symfony/config": "^3.2",
         "symfony/http-kernel": "^3.2"
