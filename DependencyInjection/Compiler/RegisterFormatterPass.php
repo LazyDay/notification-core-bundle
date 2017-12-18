@@ -7,6 +7,7 @@
 namespace SymfonyBro\NotificationCoreBundle\DependencyInjection\Compiler;
 
 
+use LogicException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -16,11 +17,6 @@ class RegisterFormatterPass implements CompilerPassInterface
 
     private $builderId = 'symfony_bro.notification_core.formatter_builder';
 
-    /**
-     * You can modify the container here before it is dumped to PHP code.
-     *
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition($this->builderId)) {

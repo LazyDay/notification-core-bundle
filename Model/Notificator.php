@@ -6,7 +6,6 @@
 
 namespace SymfonyBro\NotificationCoreBundle\Model;
 
-
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use SymfonyBro\NotificationCore\Model\AbstractNotificator;

@@ -6,7 +6,6 @@
 
 namespace SymfonyBro\NotificationCoreBundle\Model;
 
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use SymfonyBro\NotificationCore\Exception\NotificationException;
 use SymfonyBro\NotificationCore\Model\FormatterInterface;

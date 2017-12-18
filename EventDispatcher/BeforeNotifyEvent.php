@@ -6,7 +6,6 @@
 
 namespace SymfonyBro\NotificationCoreBundle\EventDispatcher;
 
-
 use Symfony\Component\EventDispatcher\Event;
 use SymfonyBro\NotificationCore\Model\ContextInterface;
 use SymfonyBro\NotificationCore\Model\RecipientInterface;

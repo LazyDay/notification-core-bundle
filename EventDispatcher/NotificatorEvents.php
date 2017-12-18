@@ -6,7 +6,6 @@
 
 namespace SymfonyBro\NotificationCoreBundle\EventDispatcher;
 
-
 final class NotificatorEvents
 {
     const BEFORE_NOTIFY = 'symfony_bro.notification_core.before_notify';

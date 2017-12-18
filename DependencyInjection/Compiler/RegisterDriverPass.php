@@ -1,6 +1,12 @@
 <?php
+/**
+ * @author Artem Dekhtyar <m@artemd.ru>
+ * @author Pavel Stepanets <pahhan.ne@gmail.com>
+ */
 
 namespace SymfonyBro\NotificationCoreBundle\DependencyInjection\Compiler;
+
+
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\LogicException;

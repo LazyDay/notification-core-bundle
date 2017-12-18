@@ -6,10 +6,10 @@
 
 namespace SymfonyBro\NotificationCoreBundle\Model;
 
-
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use SymfonyBro\NotificationCore\Exception\NotificationException;
 use SymfonyBro\NotificationCore\Model\AbstractNotificationManager;
 use SymfonyBro\NotificationCore\Model\DriverInterface;
 use SymfonyBro\NotificationCore\Model\MessageInterface;
@@ -46,6 +46,7 @@ class NotificationManager extends AbstractNotificationManager
      * @param DriverBuilder $driverBuilder
      * @param FormatterBuilder $formatterBuilder
      * @param EventDispatcherInterface $eventDispatcher
+     * @param LoggerInterface $logger
      */
     public function __construct(DriverBuilder $driverBuilder, FormatterBuilder $formatterBuilder, EventDispatcherInterface $eventDispatcher, LoggerInterface $logger)
     {
@@ -55,11 +56,21 @@ class NotificationManager extends AbstractNotificationManager
         $this->logger = $logger;
     }
 
+    /**
+     * @param MessageInterface $message
+     * @return DriverInterface
+     * @throws NotificationException
+     */
     protected function createDriver(MessageInterface $message): DriverInterface
     {
         return $this->driverBuilder->build($message);
     }
 
+    /**
+     * @param NotificationInterface $notification
+     * @return array
+     * @throws NotificationException
+     */
     protected function createFormatters(NotificationInterface $notification): array
     {
         return $this->formatterBuilder->build($notification);
