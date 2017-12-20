@@ -32,7 +32,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@gitlab.com:/symfony-bro/notification-core.git"
+            "url":  "git@gitlab.com:symfony-bro/notification-core.git"
         }
     ]
 }
